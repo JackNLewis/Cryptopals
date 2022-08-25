@@ -1,5 +1,3 @@
-import sys, base64
-
 def decrypt():
     return None
 
@@ -9,16 +7,13 @@ This function generates the new hexstring after being xor'd with a key.
 key is an integer which needs to find its correct hex string
 
 """
-def singlexor(hex, key):
-    res = ""
-    for i in range(int(len(hex)/2)):
-        hex_byte = int(hex[(2*i):(2*i)+2],16)
-        xor_byte = hex_byte ^ key
-        res += chr(xor_byte)
-    return res
+def singlexor(hex_in, key):
+    hex_bytes = bytearray.fromhex(hex_in)
+    try:
+        return bytes([h^key for h in hex_bytes]).decode("utf-8")
+    except:
+        return None
 
-    
-    #have the two strings
 
 """
 This function finds the top 6 most frequently occuring characters in the string s.
@@ -48,7 +43,6 @@ def hamming(a,b):
     
     return count/len(a)
 
-input_string = "1c0111001f010100061a024b53535009181c"
-
+input_string = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
 for i in range(256):
-    print(singlexor("1c0111001f010100061a024b53535009181c",i))
+    print(singlexor(input_string,i), i)
